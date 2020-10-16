@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++14   CMakeFiles/CRat.dir/src/main.cpp.o CMakeFiles/CRat.dir/src/CRat.cpp.o CMakeFiles/CRat.dir/src/test.cpp.o  -o CRat -rdynamic 

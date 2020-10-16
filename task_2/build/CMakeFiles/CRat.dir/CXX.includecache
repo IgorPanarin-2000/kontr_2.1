@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/kirill/kirill/progs/repet/Ekaterina_Tereshkovich/2/task_2/include/CRat.hpp
+memory
+-
+stdio.h
+-
+cstring
+-
+cmath
+-
+limits
+-
+
+/home/kirill/kirill/progs/repet/Ekaterina_Tereshkovich/2/task_2/include/test.hpp
+cmath
+-
+limits
+-
+../include/CRat.hpp
+/home/kirill/kirill/progs/repet/Ekaterina_Tereshkovich/2/task_2/include/CRat.hpp
+
+/home/kirill/kirill/progs/repet/Ekaterina_Tereshkovich/2/task_2/src/CRat.cpp
+../include/CRat.hpp
+/home/kirill/kirill/progs/repet/Ekaterina_Tereshkovich/2/task_2/include/CRat.hpp
+
+/home/kirill/kirill/progs/repet/Ekaterina_Tereshkovich/2/task_2/src/main.cpp
+../include/CRat.hpp
+/home/kirill/kirill/progs/repet/Ekaterina_Tereshkovich/2/task_2/include/CRat.hpp
+../include/test.hpp
+/home/kirill/kirill/progs/repet/Ekaterina_Tereshkovich/2/task_2/include/test.hpp
+
+/home/kirill/kirill/progs/repet/Ekaterina_Tereshkovich/2/task_2/src/test.cpp
+../include/test.hpp
+/home/kirill/kirill/progs/repet/Ekaterina_Tereshkovich/2/task_2/include/test.hpp
+
