@@ -1,15 +1,22 @@
 
 #include "../include/CRat.hpp"
 
-CRat_t::CRat_t (int array_size = 0)
+CRat_t::CRat_t ()
+{
+  m_array_p = 0;
+  m_array_q = 0;
+  m_array_size = 0;
+}
+
+CRat_t::CRat_t (int array_size)
 {
   if (array_size > 0)
     {
       m_array_size = array_size;
-      m_array_p = new double [m_array_size];
-      m_array_q = new double [m_array_size];
-      memset (m_array_p, 0, m_array_size * sizeof (double));
-      memset (m_array_q, 0, m_array_size * sizeof (double));
+      m_array_p = new int [m_array_size];
+      m_array_q = new int [m_array_size];
+      memset (m_array_p, 0, m_array_size * sizeof (int));
+      memset (m_array_q, 0, m_array_size * sizeof (int));
     }
   else
     {
@@ -19,15 +26,21 @@ CRat_t::CRat_t (int array_size = 0)
     }
 }
 
-CRat_t::CRat_t (double *array_p = 0, double *array_q = 0, int array_size = 0)
+CRat_t::CRat_t (int *array_p, int *array_q, int array_size)
 {
-  if (array_size > 0)
+  if (array_size > 0 && array_p && array_q)
     {
       m_array_size = array_size;
-      m_array_p = new double [m_array_size];
-      m_array_q = new double [m_array_size];
-      memcpy (m_array_p, array_p, m_array_size * sizeof (double));
-      memcpy (m_array_q, array_q, m_array_size * sizeof (double));
+      m_array_p = new int [m_array_size];
+      m_array_q = new int [m_array_size];
+      memcpy (m_array_p, array_p, m_array_size * sizeof (int));
+      memcpy (m_array_q, array_q, m_array_size * sizeof (int));
+    }
+  else
+    {
+      m_array_p = 0;
+      m_array_q = 0;
+      m_array_size = 0;
     }
 }
 
@@ -39,12 +52,12 @@ CRat_t::~CRat_t ()
     delete [] m_array_q;
 }
 
-double *CRat_t::get_array_p ()
+int *CRat_t::get_array_p ()
 {
   return m_array_p;
 }
 
-double *CRat_t::get_array_q ()
+int *CRat_t::get_array_q ()
 {
   return m_array_q;
 }
@@ -54,14 +67,14 @@ int CRat_t::get_array_size ()
   return m_array_size;
 }
 
-void CRat_t::set_array_p (double *array_p)
+void CRat_t::set_array_p (int *array_p)
 {
   if (m_array_p)
     delete [] m_array_p;
   m_array_p = array_p;
 }
 
-void CRat_t::set_array_q (double *array_q)
+void CRat_t::set_array_q (int *array_q)
 {
   if (m_array_q)
     delete [] m_array_q;
@@ -88,11 +101,10 @@ void CRat_t::print_vector ()
 {
   for (int i = 0; i < m_array_size; i++)
     {
-      if (fabs (m_array_p[i]) < std::numeric_limits<double>::epsilon () ||
-          fabs (m_array_q[i] - 1.) < std::numeric_limits<double>::epsilon ())
-        printf ("CRat[%d] = %2.1lf\n", i, m_array_p[i]);
+      if (m_array_p[i] == 0 || m_array_q[i] == 1)
+        printf ("CRat[%d] = %2d\n", i, m_array_p[i]);
       else
-        printf ("CRat[%d] = %2.1lf / %2.1lf\n", i, m_array_p[i], m_array_q[i]);
+        printf ("CRat[%d] = %2d / %2d\n", i, m_array_p[i], m_array_q[i]);
     }
   printf ("\n");
 }
@@ -102,8 +114,8 @@ CRat_t CRat_t::operator+ (CRat_t &rhs)
   if (m_array_size != rhs.m_array_size)
     return *this;
 
-  std::unique_ptr<double []> array_p_temp (new double [m_array_size]);
-  std::unique_ptr<double []> array_q_temp (new double [m_array_size]);
+  std::unique_ptr<int []> array_p_temp (new int [m_array_size]);
+  std::unique_ptr<int []> array_q_temp (new int [m_array_size]);
 
   for (int i = 0; i < m_array_size; i++)
     {
@@ -119,8 +131,8 @@ CRat_t CRat_t::operator- (CRat_t &rhs)
   if (m_array_size != rhs.m_array_size)
     return *this;
 
-  std::unique_ptr<double []> array_p_temp (new double [m_array_size]);
-  std::unique_ptr<double []> array_q_temp (new double [m_array_size]);
+  std::unique_ptr<int []> array_p_temp (new int [m_array_size]);
+  std::unique_ptr<int []> array_q_temp (new int [m_array_size]);
 
   for (int i = 0; i < m_array_size; i++)
     {
@@ -131,22 +143,22 @@ CRat_t CRat_t::operator- (CRat_t &rhs)
   return CRat_t (array_p_temp.get (), array_q_temp.get (), m_array_size);
 }
 
-CRat_t CRat_t::operator* (CRat_t &rhs)
+double CRat_t::operator* (CRat_t &rhs)
 {
   if (m_array_size != rhs.m_array_size)
-    return *this;
+    return 0.;
 
-  double sum_p = 0., temp_p;
-  double sum_q = 0., temp_q;
+  int sum_p = 0., temp_p;
+  int sum_q = 0., temp_q;
 
   for (int i = 0; i < m_array_size; i++)
     {
       temp_p = m_array_p[i] * rhs.m_array_p[i];
       temp_q = m_array_q[i] * rhs.m_array_q[i];
 
-      if (fabs (temp_p) > std::numeric_limits<double>::epsilon ())
+      if (temp_p != 0)
         {
-          if (fabs (sum_p) < std::numeric_limits<double>::epsilon ())
+          if (sum_p == 0)
             {
               sum_p = temp_p;
               sum_q = temp_q;
@@ -159,7 +171,7 @@ CRat_t CRat_t::operator* (CRat_t &rhs)
         }
     }
 
-  return CRat_t (&sum_p, &sum_q, 1);
+  return (double) sum_p / sum_q;
 }
 
 CRat_t& CRat_t::operator= (CRat_t &rhs)
@@ -175,10 +187,10 @@ CRat_t& CRat_t::operator= (CRat_t &rhs)
     }
 
   m_array_size = rhs.m_array_size;
-  m_array_p = new double [m_array_size];
-  m_array_q = new double [m_array_size];
-  memcpy (m_array_p, rhs.m_array_p, m_array_size * sizeof (double));
-  memcpy (m_array_q, rhs.m_array_q, m_array_size * sizeof (double));
+  m_array_p = new int [m_array_size];
+  m_array_q = new int [m_array_size];
+  memcpy (m_array_p, rhs.m_array_p, m_array_size * sizeof (int));
+  memcpy (m_array_q, rhs.m_array_q, m_array_size * sizeof (int));
 
   return *this;
 }

@@ -10,21 +10,22 @@
 class CRat_t
 {
 private:
-  double *m_array_p;
-  double *m_array_q;
+  int *m_array_p;
+  int *m_array_q;
   int m_array_size;
 
 public:
+  CRat_t ();
   CRat_t (int array_size);
-  CRat_t (double *array_p, double *array_q, int array_size);
+  CRat_t (int *array_p, int *array_q, int array_size);
   ~CRat_t ();
 
-  double *get_array_p ();
-  double *get_array_q ();
+  int *get_array_p ();
+  int *get_array_q ();
   int get_array_size ();
 
-  void set_array_p (double *array_p);
-  void set_array_q (double *array_q);
+  void set_array_p (int *array_p);
+  void set_array_q (int *array_q);
   void set_array_size (int array_size);
 
   void init_vector ();
@@ -32,7 +33,7 @@ public:
 
   CRat_t operator+ (CRat_t &rhs);
   CRat_t operator- (CRat_t &rhs);
-  CRat_t operator* (CRat_t &rhs);
+  double operator* (CRat_t &rhs);
   CRat_t& operator= (CRat_t &rhs);
 
 };

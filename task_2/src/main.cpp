@@ -24,8 +24,10 @@ int main ()
   printf ("VECTOR_0 - VECTOR_1:\n");
   vector3.print_vector ();
 
-  printf ("VECTOR_0 * VECTOR_1:\n");
-  (vector0 * vector1).print_vector ();
+  printf ("VECTOR_0 * VECTOR_1: %2.4lf\n", vector0 * vector1);
+
+  CRat_t vector4;
+  CRat_t vector5 ();
 
   autotest ();
   return 0;
