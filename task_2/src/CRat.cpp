@@ -3,34 +3,18 @@
 
 CRat_t::CRat_t ()
 {
-  m_array_p = 0;
-  m_array_q = 0;
-  m_array_size = 0;
+  m_array_size = 3;
+  m_array_p = new int [m_array_size];
+  m_array_q = new int [m_array_size];
+  memset (m_array_p, 0, m_array_size * sizeof (int));
+  memset (m_array_q, 0, m_array_size * sizeof (int));
 }
 
-CRat_t::CRat_t (int array_size)
+CRat_t::CRat_t (int *array_p, int *array_q)
 {
-  if (array_size > 0)
+  m_array_size = 3;
+  if (array_p && array_q)
     {
-      m_array_size = array_size;
-      m_array_p = new int [m_array_size];
-      m_array_q = new int [m_array_size];
-      memset (m_array_p, 0, m_array_size * sizeof (int));
-      memset (m_array_q, 0, m_array_size * sizeof (int));
-    }
-  else
-    {
-      m_array_p = 0;
-      m_array_q = 0;
-      m_array_size = 0;
-    }
-}
-
-CRat_t::CRat_t (int *array_p, int *array_q, int array_size)
-{
-  if (array_size > 0 && array_p && array_q)
-    {
-      m_array_size = array_size;
       m_array_p = new int [m_array_size];
       m_array_q = new int [m_array_size];
       memcpy (m_array_p, array_p, m_array_size * sizeof (int));
@@ -123,7 +107,7 @@ CRat_t CRat_t::operator+ (CRat_t &rhs)
       array_q_temp[i] = m_array_q[i] * rhs.m_array_q[i];
     }
 
-  return CRat_t (array_p_temp.get (), array_q_temp.get (), m_array_size);
+  return CRat_t (array_p_temp.get (), array_q_temp.get ());
 }
 
 CRat_t CRat_t::operator- (CRat_t &rhs)
@@ -140,7 +124,7 @@ CRat_t CRat_t::operator- (CRat_t &rhs)
       array_q_temp[i] = m_array_q[i] * rhs.m_array_q[i];
     }
 
-  return CRat_t (array_p_temp.get (), array_q_temp.get (), m_array_size);
+  return CRat_t (array_p_temp.get (), array_q_temp.get ());
 }
 
 double CRat_t::operator* (CRat_t &rhs)

@@ -16,8 +16,7 @@ private:
 
 public:
   CRat_t ();
-  CRat_t (int array_size);
-  CRat_t (int *array_p, int *array_q, int array_size);
+  CRat_t (int *array_p, int *array_q);
   ~CRat_t ();
 
   int *get_array_p ();
