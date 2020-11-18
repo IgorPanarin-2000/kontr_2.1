@@ -6,6 +6,8 @@
 
 #include "../include/CRat.hpp"
 
+#define VECTOR_SIZE 3
+
 void autotest ();
 
 #endif // __TEST_INCLUDED__

@@ -3,14 +3,14 @@
 
 void autotest ()
 {
-  CRat_t vector0;
+  CRat_t vector0 (VECTOR_SIZE);
   vector0.init_vector ();
   for (int i = 0; i < 3; i++)
     if (vector0.get_array_p ()[i] != i)
       { printf ("TEST FAILED!\n"); return; }
 
 
-  CRat_t vector1;
+  CRat_t vector1 (VECTOR_SIZE);
   vector1.init_vector ();
   for (int i = 0; i < 3; i++)
     if (vector1.get_array_p ()[i] != i)

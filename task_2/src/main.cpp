@@ -2,14 +2,16 @@
 #include "../include/CRat.hpp"
 #include "../include/test.hpp"
 
+#define VECTOR_SIZE 3
+
 int main ()
 {
-  CRat_t vector0;
+  CRat_t vector0 (VECTOR_SIZE);
   vector0.init_vector ();
   printf ("VECTOR_0:\n");
   vector0.print_vector ();
 
-  CRat_t vector1;
+  CRat_t vector1 (VECTOR_SIZE);
   vector1.init_vector ();
   printf ("VECTOR_1:\n");
   vector1.print_vector ();
